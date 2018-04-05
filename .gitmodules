@@ -1,3 +1,6 @@
 [submodule "crawler"]
 	path = crawler
 	url = https://github.com/PedroRossi/veegle-crawler
+[submodule "classifier"]
+	path = classifier
+	url = https://github.com/PedroRossi/veegle-classifier.git
