@@ -1,2 +1,2 @@
 # veegle
-Vegetarian and vegan food search engine
+Vegan food search engine
