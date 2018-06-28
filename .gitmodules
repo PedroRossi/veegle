@@ -4,3 +4,6 @@
 [submodule "classifier"]
 	path = classifier
 	url = https://github.com/PedroRossi/veegle-classifier.git
+[submodule "extractor"]
+	path = extractor
+	url = https://github.com/PedroRossi/veegle-extractor.git
