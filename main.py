@@ -1,8 +1,8 @@
+import os
 from classifier.classifier import Classifier
 
 def main():
-    my_classifier = Classifier('mlp', True)
-    print('Hi!')
+    classifier = Classifier('naive_bayes', False)
 
 if __name__ == '__main__':
     main()
