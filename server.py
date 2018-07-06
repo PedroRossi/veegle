@@ -1,10 +1,11 @@
-import json
 from flask import Flask, jsonify, make_response, request
 from flask_cors import CORS
 from string import punctuation
 from copy import deepcopy
 import numpy as np
 import nltk
+import json
+import os
 
 nltk.download('stopwords')
 nltk.download('rslp')
@@ -44,13 +45,14 @@ class QueryProcessor:
             for q in query:
                 comp = attr + '.' + q
                 if comp in self.index_dictionary[attr]:
-                    documents_to_get += self.index_dictionary[attr][comp]
-        list_of_documents = np.unique([doc[0] for doc in documents_to_get])
+                    documents_to_get += list(self.index_dictionary[attr][comp])
+        documents_to_get = np.unique(documents_to_get)
         a = []
         results = []
         for q in query:
             a.append(1)
-        for i in list_of_documents:
+        for i in documents_to_get:
+            i = int(i)
             aux = []
             for attr in self.attributes_list:
                 aux += self.documents[i][attr]
@@ -151,7 +153,8 @@ def main():
     qp = load_query_processor()
     app = create_app(qp)
     CORS(app)
-    app.run(host='0.0.0.0', port=5000)
+    port = int(os.environ.get("PORT", 5000))
+    app.run(host='0.0.0.0', port=port)
     
 if __name__ == '__main__':
     main()
