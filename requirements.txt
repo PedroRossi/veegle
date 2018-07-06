@@ -1,4 +1,10 @@
 beautifulsoup4==4.6.0
+click==6.7
+Flask==1.0.2
+Flask_Cors==3.0.6
+itsdangerous==0.24
+Jinja2==2.10
+MarkupSafe==1.0
 nltk==3.3
 numpy==1.14.5
 pandas==0.23.1
@@ -6,6 +12,6 @@ reppy==0.4.9
 requests==2.18.4
 scikit-learn==0.19.1
 scipy==1.1.0
+six=1.11.0
 selenium==3.12.0
-
-
+Werkzeug==0.14.1

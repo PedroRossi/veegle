@@ -13,3 +13,6 @@
 [submodule "indexer"]
 	path = indexer
 	url = https://github.com/PedroRossi/veegle-indexer.git
+[submodule "query"]
+	path = query
+	url = https://github.com/PedroRossi/veegle-query.git
