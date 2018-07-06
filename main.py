@@ -33,14 +33,17 @@ def extract():
                 recipes.append(recipe)
             except:
                 print('error in file: ' + filename + '\n')
-    ret = json.dumps(recipes, indent=True, ensure_ascii=False)
-    return ret
+    return recipes
 
 def index_attributes(names, ingredients, steps):
+    # all
+    i = Indexer(names + ingredients + steps)
+    index_names = i.get_index()
+    dump_to_json('all', index_names)
     # names
     i = Indexer(names)
     index_names = i.get_index('name')
-    dump_to_json('names', index_names)
+    dump_to_json('name', index_names)
     # ingredients
     i = Indexer(ingredients)
     index_ingredients = i.get_index('ingredients')
@@ -51,10 +54,10 @@ def index_attributes(names, ingredients, steps):
     dump_to_json('steps', index_steps)
 
 def load_query_processor():
-    documents = load_from_json('./extractor/out.json')
-    index_names = load_from_json('./indexer/name.json')
-    index_ingredients = load_from_json('./indexer/ingredients.json')
-    index_steps = load_from_json('./indexer/steps.json')
+    documents = load_from_json('./out.json')
+    index_names = load_from_json('./name.json')
+    index_ingredients = load_from_json('./ingredients.json')
+    index_steps = load_from_json('./steps.json')
     d = {
         'name': index_names,
         'ingredients': index_ingredients,
@@ -62,6 +65,17 @@ def load_query_processor():
     }
     qp = QueryProcessor(documents, d)
     return qp
+
+def test_query_processor(q):
+    qp = load_query_processor()
+    arr = qp.advanced_search({'name': q}, False)[:10]
+    print('Boolean')
+    for a in arr:
+        print(a['name'])
+    arr = qp.advanced_search({'name': q}, True)[:10]
+    print('TF-IDF')
+    for a in arr:
+        print(a['name'])
 
 def create_app(query_processor):
     # create and configure the app
@@ -91,7 +105,6 @@ def create_app(query_processor):
     return app
 
 def main():
-    # classifier = Classifier('naive_bayes', False)
     qp = load_query_processor()
     app = create_app(qp)
     CORS(app)
